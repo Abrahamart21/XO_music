@@ -1,0 +1,7 @@
+{
+  "name": "XO_music",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

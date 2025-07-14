@@ -8,6 +8,9 @@
 </ion-header>
 
 <ion-content>
+  <ion-button (click)="verIntro()" expand="block" color="primary">
+  Ver Intro
+</ion-button>
   <swiper-container pagination="true" loop="true" slides-per-view="1">
     <swiper-slide *ngFor="let genre of genres">
       <div

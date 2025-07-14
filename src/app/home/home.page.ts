@@ -3,6 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { StorageService } from '../services/storage.service'; // tu servicio personalizado
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -49,7 +50,12 @@ export class HomePage {
     }
   ];
 
-  constructor(private storageService: StorageService) {}
+  constructor(private storageService: StorageService,
+  private router: Router) {}
+  
+verIntro() {
+  this.router.navigateByUrl('/intro');
+}
 
   async ngOnInit() {
     const savedColor = await this.storageService.get('tema-color');

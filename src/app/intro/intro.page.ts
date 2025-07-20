@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { StorageService } from '../services/storage.service'; // si no lo tienes ya
+import { StorageService } from '../services/storage.service'; 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
@@ -16,7 +16,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 })
 export class IntroPage implements OnInit {
 
-  // 🔹 Aquí va el arreglo de slides
+  
   slides = [
     {
       title: 'Bienvenido',

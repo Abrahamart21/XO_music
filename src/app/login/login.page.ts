@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
+import { AuthService } from '../services/auth.service';
+import { StorageService } from '../services/storage.service'; // <-- Asegúrate que esté creado
 
 @Component({
   selector: 'app-login',
@@ -11,10 +13,9 @@ import { IonicModule } from '@ionic/angular';
   imports: [CommonModule, FormsModule, IonicModule, ReactiveFormsModule]
 })
 export class LoginPage implements OnInit {
-
   loginForm: FormGroup;
+  errorMessage: string = "";
 
-  // ✅ Mensajes de validación para email y password
   validation_messages = {
     email: [
       { type: 'required', message: 'El email es obligatorio.' },
@@ -26,7 +27,12 @@ export class LoginPage implements OnInit {
     ]
   };
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private navCtrl: NavController,
+    private storageService: StorageService // <-- inyectamos storage
+  ) {
     this.loginForm = this.formBuilder.group({
       email: new FormControl('', [
         Validators.required,
@@ -41,7 +47,20 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {}
 
-  loginUser(credentials: any) {
-    console.log(credentials);
+  async loginUser(credentials: any) {
+    try {
+      await this.authService.loginUser(credentials);
+      this.errorMessage = "";
+
+      // ✅ Guardamos en el storage los flags necesarios
+      await this.storageService.set("logueado", true);
+      await this.storageService.set("introVisto", false);
+
+      // ✅ Navegamos al intro, no al home
+      this.navCtrl.navigateForward("/intro");
+
+    } catch (error) {
+      this.errorMessage = String(error);
+    }
   }
 }

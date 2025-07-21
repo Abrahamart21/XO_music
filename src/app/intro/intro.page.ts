@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { StorageService } from '../services/storage.service'; 
+import { StorageService } from '../services/storage.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
@@ -16,7 +16,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 })
 export class IntroPage implements OnInit {
 
-  
   slides = [
     {
       title: 'Bienvenido',
@@ -45,7 +44,8 @@ export class IntroPage implements OnInit {
   ngOnInit() {}
 
   goBack() {
-    this.storageService.set('intro-visto', true);
+    // ✅ Usar el mismo nombre exacto que en login.page.ts
+    this.storageService.set('introVisto', true);
     this.router.navigateByUrl('/home');
   }
 }

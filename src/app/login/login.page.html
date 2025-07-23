@@ -4,6 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
   <figure class="profile-default-imag ion-text-center">
     <p>Ingresa tus datos</p>
@@ -57,6 +58,12 @@
       type="submit">
       Login
     </ion-button>
+ 
+<ion-button fill="clear" (click)="goToRegister()">
+  ¿No tienes cuenta? Regístrate aquí
+</ion-button>
+
+
   </form>
   {{errorMessage}}
 </ion-content>

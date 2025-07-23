@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
-import { StorageService } from '../services/storage.service'; // <-- Asegúrate que esté creado
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,6 @@ import { StorageService } from '../services/storage.service'; // <-- Asegúrate 
 export class LoginPage implements OnInit {
   loginForm: FormGroup;
   errorMessage: string = "";
-
   validation_messages = {
     email: [
       { type: 'required', message: 'El email es obligatorio.' },
@@ -23,7 +22,7 @@ export class LoginPage implements OnInit {
     ],
     password: [
       { type: 'required', message: 'La contraseña es obligatoria.' },
-      { type: 'minlength', message: 'La contraseña debe tener mínimo 5 caracteres.' }
+      { type: 'minlength', message: 'Debe tener mínimo 5 caracteres.' }
     ]
   };
 
@@ -31,17 +30,11 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private navCtrl: NavController,
-    private storageService: StorageService // <-- inyectamos storage
+    private storageService: StorageService
   ) {
     this.loginForm = this.formBuilder.group({
-      email: new FormControl('', [
-        Validators.required,
-        Validators.email
-      ]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(5)
-      ])
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(5)])
     });
   }
 
@@ -52,15 +45,16 @@ export class LoginPage implements OnInit {
       await this.authService.loginUser(credentials);
       this.errorMessage = "";
 
-      // ✅ Guardamos en el storage los flags necesarios
-      await this.storageService.set("logueado", true);
-      await this.storageService.set("introVisto", false);
+      await this.storageService.set('logueado', true);
+      await this.storageService.set('introVisto', false);
 
-      // ✅ Navegamos al intro, no al home
-      this.navCtrl.navigateForward("/intro");
-
-    } catch (error) {
-      this.errorMessage = String(error);
+      this.navCtrl.navigateForward('/intro');
+    } catch (error: any) {
+      this.errorMessage = error;
     }
+  }
+
+  goToRegister() {
+    this.navCtrl.navigateForward('/register');
   }
 }

@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="registerForm" (ngSubmit)="registerUser()">
+    <ion-item>
+      <ion-input label="Nombre" formControlName="name" labelPlacement="floating"></ion-input>
+    </ion-item>
+    <div class="error" *ngIf="registerForm.get('name')?.errors?.['required'] && registerForm.get('name')?.touched">
+      {{ validation_messages.name[0].message }}
+    </div>
+
+    <ion-item>
+      <ion-input label="Apellido" formControlName="lastname" labelPlacement="floating"></ion-input>
+    </ion-item>
+    <div class="error" *ngIf="registerForm.get('lastname')?.errors?.['required'] && registerForm.get('lastname')?.touched">
+      {{ validation_messages.lastname[0].message }}
+    </div>
+
+    <ion-item>
+      <ion-input label="Email" formControlName="email" type="email" labelPlacement="floating"></ion-input>
+    </ion-item>
+    <div class="error" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+      <ng-container *ngFor="let v of validation_messages.email">
+        <div *ngIf="registerForm.get('email')?.hasError(v.type)">
+          {{ v.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-item>
+      <ion-input label="Contraseña" formControlName="password" type="password" labelPlacement="floating"></ion-input>
+    </ion-item>
+    <div class="error" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+      <ng-container *ngFor="let v of validation_messages.password">
+        <div *ngIf="registerForm.get('password')?.hasError(v.type)">
+          {{ v.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-button expand="full" type="submit" [disabled]="!registerForm.valid">
+      Registrar
+    </ion-button>
+
+    <ion-button expand="full" fill="clear" color="medium" (click)="goToLogin()">
+      ¿Ya tienes cuenta? Inicia sesión
+    </ion-button>
+  </form>
+</ion-content>

@@ -4,22 +4,25 @@ import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
-    path: 'home',
-    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
-    canActivate: [authGuard, introGuard] // Primero valida si está logueado y si vio la intro
-  },
-  {
-    path: 'intro',
-    loadComponent: () => import('./intro/intro.page').then((m) => m.IntroPage)
+    path: '',
+    redirectTo: 'login', // ✅ Comienza desde login
+    pathMatch: 'full'
   },
   {
     path: 'login',
     loadComponent: () => import('./login/login.page').then((m) => m.LoginPage)
   },
   {
-    path: '',
-    redirectTo: 'login', // 🚨 Importante: iniciar desde login
-    pathMatch: 'full'
+    path: 'register',
+    loadComponent: () => import('./register/register.page').then((m) => m.RegisterPage)
+  },
+  {
+    path: 'intro',
+    loadComponent: () => import('./intro/intro.page').then((m) => m.IntroPage)
+  },
+  {
+    path: 'home',
+    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+    canActivate: [authGuard, introGuard] // ✅ Validaciones antes de entrar a home
   }
 ];
-

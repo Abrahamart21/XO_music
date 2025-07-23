@@ -10,16 +10,24 @@ export class AuthService {
 
   loginUser(credentials: any) {
     return new Promise((accept, reject) => {
-      if (
-        credentials.email == "abraham213@gamil.com" &&
-        credentials.password == "1234567"
-      ) {
-        this.storage.set('login', true); // ✅ guarda login
+      if (credentials.email == "abraham123@gmail.com" && credentials.password == "1234567") {
+        this.storage.set('isLoggedIn', true);
         accept("login correcto");
       } else {
         reject("login incorrecto");
       }
     });
   }
-}
 
+  registrarUsuario(data: any) {
+    return new Promise(async (accept, reject) => {
+      try {
+        await this.storage.set('registro', data);
+        accept("registro exitoso");
+      } catch (error) {
+        reject("error al registrar");
+      }
+    });
+  }
+}
+//este es el primero

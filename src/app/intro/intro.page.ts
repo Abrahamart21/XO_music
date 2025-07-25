@@ -46,7 +46,7 @@ export class IntroPage implements OnInit {
   goBack() {
     // ✅ Usar el mismo nombre exacto que en login.page.ts
     this.storageService.set('introVisto', true);
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('menu/home');//ruta cambiada por anidacion
   }
 }
 

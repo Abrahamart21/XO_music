@@ -33,4 +33,8 @@ export const routes: Routes = [
 
     ]
   },
+  {
+    path: 'song-modal',
+    loadComponent: () => import('./song-modal/song-modal.page').then( m => m.SongModalPage)
+  },
 ];

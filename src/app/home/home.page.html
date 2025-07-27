@@ -1,19 +1,22 @@
 <ion-header>
   <ion-toolbar>
-  <ion-title>GÉNEROS MUSICALES</ion-title>
-  <ion-buttons slot="end">
-    <ion-button (click)="cambiaColor()">Cambiar tema</ion-button>
-  </ion-buttons>
-  <ion-buttons slot="end">
-    <ion-menu-button></ion-menu-button>
-  </ion-buttons>
-</ion-toolbar>
+    <ion-title>GÉNEROS MUSICALES</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cambiaColor()">Cambiar tema</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <!-- Botón para ver la intro -->
   <ion-button (click)="verIntro()" expand="block" color="primary">
-  Ver Intro
-</ion-button>
+    Ver Intro
+  </ion-button>
+
+  <!-- Swiper de géneros musicales -->
   <swiper-container pagination="true" loop="true" slides-per-view="1">
     <swiper-slide *ngFor="let genre of genres">
       <div
@@ -27,4 +30,26 @@
       </div>
     </swiper-slide>
   </swiper-container>
+
+  <!-- Swiper de álbumes -->
+  <swiper-container pagination="true" loop="true" slides-per-view="3" style="margin-top: 30px;">
+    <swiper-slide *ngFor="let album of albums" (click)="showSongs(album.id)">
+      <div class="slide-content">
+        <img [src]="album.image" alt="{{ album.name }}" />
+        <h4>{{ album.name }}</h4>
+      </div>
+    </swiper-slide>
+  </swiper-container>
+  <!--tarea : mostrar un swiper  o lista con  los artistas del servidor y al darle click muestre las canciones de ese artist -->
+  <!-- Swiper de artistas del servidor -->
+<swiper-container pagination="true" loop="true" slides-per-view="2" style="margin-top: 30px;">
+  <swiper-slide *ngFor="let artist of artists" (click)="showSongsByArtist(artist.id)">
+    <div class="slide-content">
+      <img [src]="artist.image" alt="{{ artist.name }}" />
+      <h4>{{ artist.name }}</h4>
+    </div>
+  </swiper-slide>
+</swiper-container>
+
 </ion-content>
+

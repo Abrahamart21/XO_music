@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>GÉNEROS MUSICALES</ion-title>
+    <ion-title>BIENVENIDO</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="cambiaColor()">Cambiar tema</ion-button>
     </ion-buttons>
@@ -12,9 +12,7 @@
 
 <ion-content>
   <!-- Botón para ver la intro -->
-  <ion-button (click)="verIntro()" expand="block" color="primary">
-    Ver Intro
-  </ion-button>
+  
 
   <!-- Swiper de géneros musicales -->
   <swiper-container pagination="true" loop="true" slides-per-view="1">
@@ -22,10 +20,10 @@
       <div
         class="slide-content"
         [style.background-color]="obtenerColor(genre)"
-        [style.color]="obtenerTextoColor()"
-      >
+        [style.color]="obtenerTextoColor()">
+
         <h2>{{ genre.title }}</h2>
-        <img [src]="genre.image" [alt]="genre.title" />
+        <img [src]="genre.image" [alt]="genre.title"/>
         <p>{{ genre.description }}</p>
       </div>
     </swiper-slide>
@@ -40,16 +38,61 @@
       </div>
     </swiper-slide>
   </swiper-container>
-  <!--tarea : mostrar un swiper  o lista con  los artistas del servidor y al darle click muestre las canciones de ese artist -->
-  <!-- Swiper de artistas del servidor -->
-<swiper-container pagination="true" loop="true" slides-per-view="2" style="margin-top: 30px;">
-  <swiper-slide *ngFor="let artist of artists" (click)="showSongsByArtist(artist.id)">
-    <div class="slide-content">
-      <img [src]="artist.image" alt="{{ artist.name }}" />
-      <h4>{{ artist.name }}</h4>
-    </div>
-  </swiper-slide>
-</swiper-container>
 
+  <!-- Swiper de artistas del servidor -->
+  <swiper-container pagination="true" loop="true" slides-per-view="2" style="margin-top: 30px;">
+    <swiper-slide *ngFor="let artist of artists" (click)="showSongsByArtist(artist.id)">
+      <div class="slide-content">
+        <img [src]="artist.image" alt="{{ artist.name }}" />
+        <h4>{{ artist.name }}</h4>
+      </div>
+    </swiper-slide>
+  </swiper-container>
 </ion-content>
 
+<ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-text-start">
+        {{ formatTime(currentSong?.currentTime) || "0:00" }}
+      </ion-col>
+      <ion-col class="ion-text-end">
+        {{ formatTime(getRemainingTime()) || "0:00" }}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-progress-bar [value]="newTime"></ion-progress-bar>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="1">
+        <!-- ❤️ o ❌ dependiendo si es favorito -->
+        <ion-icon
+  [name]="song?.isFavorite ? 'close-circle' : 'heart'"
+  (click)="toggleFavorite()"
+></ion-icon>
+
+      </ion-col>
+
+      <ion-col size="10">
+        <ion-text>
+          {{ song.name || "selecciona una canción" }}
+        </ion-text>
+      </ion-col>
+
+      <ion-col size="1">
+        <ion-icon
+          name="play"
+          *ngIf="!song.playing"
+          (click)="play()"
+        ></ion-icon>
+        <ion-icon
+          name="pause"
+          *ngIf="song.playing"
+          (click)="pause()"
+        ></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

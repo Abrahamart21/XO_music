@@ -30,41 +30,55 @@ export class MusicService {
     return fetch(`${this.urlServer}/tracks/album/${albumId}`).then(res => res.json());
   }
 
-  // ✅ TAREA: Obtener artistas desde el servidor
+  // Obtener artistas desde el servidor
   getArtistsFromServer() {
     return fetch(`${this.urlServer}/artists`).then(res => res.json());
   }
 
-  // ✅ TAREA: Obtener canciones por artista (ID)
+  // Obtener canciones por artista (ID)
   getSongsByArtist(artistId: string) {
     return fetch(`${this.urlServer}/tracks/artist/${artistId}`).then(res => res.json());
   }
 
-  // BONUS: (Por si quieres ver un solo artista)
+  // Obtener artista por ID (opcional)
   getArtistById(artistId: string) {
     return fetch(`${this.urlServer}/artists/${artistId}`).then(res => res.json());
   }
 
-  // BONUS: (FAVORITOS más adelante)
+  // ✅ FAVORITOS: Agregar a favoritos
   addFavorite(trackId: string, userId: string) {
-    return fetch(`${this.urlServer}/favorites`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ track_id: trackId, user_id: userId })
-    }).then(res => res.json());
-  }
-
-  removeFavorite(favoriteId: string) {
-    return fetch(`${this.urlServer}/favorites/${favoriteId}`, {
-      method: 'DELETE'
-    }).then(res => res.json());
-  }
-
-  isFavorite(trackId: string, userId: string) {
-    return fetch(`${this.urlServer}/favorites/check?track_id=${trackId}&user_id=${userId}`)
-      .then(res => res.json());
-  }
+  return fetch(`${this.urlServer}/favorites`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ track_id: trackId, user_id: userId })
+  }).then(res => res.json());
 }
 
+
+  // ✅ FAVORITOS: Eliminar de favoritos
+  removeFavorite(trackId: string, userId: string) {
+  return fetch(`${this.urlServer}/favorites/remove`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ track_id: trackId, user_id: userId })
+  }).then(res => res.json());
+}
+
+
+  // ✅ FAVORITOS: Verificar si está en favoritos
+  isFavorite(trackId: string, userId: string) {
+  return fetch(`${this.urlServer}/favorites/check?track_id=${trackId}&user_id=${userId}`)
+    .then(res => {
+      if (!res.ok) {
+        throw new Error("No se pudo verificar si es favorito");
+      }
+      return res.json();
+    });
+}
+
+
+}

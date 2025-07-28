@@ -24,3 +24,24 @@
   font-size: 18px;
   text-align: justify;
 }
+:host-context(.tema-claro) {
+  ion-content {
+    --background: #f4f4f4;
+    color: #000;
+  }
+}
+
+:host-context(.tema-oscuro) {
+  ion-content {
+    --background: #5f4085;
+    color: #fff;
+  }
+}
+ :host-context(.tema-claro) .slide-content {
+  color: #000 !important;
+}
+
+:host-context(.tema-oscuro) .slide-content {
+  color: #fff !important;
+}
+

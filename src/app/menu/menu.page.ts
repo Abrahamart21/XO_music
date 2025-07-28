@@ -13,13 +13,20 @@ import { StorageService } from '../services/storage.service';
 })
 export class MenuPage implements OnInit {
 
-  constructor(private navCtrl: NavController, private storageService: StorageService) {}
+  constructor(
+    private navCtrl: NavController,
+    private storageService: StorageService
+  ) {}
 
   ngOnInit() {}
 
   async cerrarSesion() {
     await this.storageService.remove("login");
     this.navCtrl.navigateRoot("/login");
+  }
+
+  verIntro() {
+    this.navCtrl.navigateForward('/intro');
   }
 }
 
